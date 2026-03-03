@@ -15,17 +15,17 @@ You're watching a movie. An explosion happens and your walls shake. Someone says
 
 Every AV receiver since the 1970s has had one. Every soundbar either buries it in some proprietary app or doesn't have it at all. Linux doesn't touch it because it assumes you have a proper receiver with physical knobs.
 
-If you have a soundbar, a pair of desktop speakers, or headphones, and you watch anything with a 5.1 surround mix, you have experienced this problem. There was no good solution on Linux. Now there is.
+If you have a soundbar, a pair of desktop speakers, or headphones, and you watch anything with a 5.1 surround mix, you have experienced this problem. I was unable to find a solution on Linux, until now.
 
 ## The Origin Story
 
-This app exists because its creator doesn't know Python.
+This app exists because I don't know Python.
 
-What happened was: someone was trying to watch The Expanse on Ubuntu with a soundbar and couldn't hear dialog over the engine rumble of the Rocinante. They complained to Claude (Anthropic's AI) about the fact that there's no center channel volume knob anywhere in the Linux audio stack. Claude agreed this was genuinely insane. One conversation later, we had a working PipeWire filter-chain config. Two hours after that, we had a GTK4 app with real-time sliders that poke PipeWire's running audio graph without restarting anything.
+What happened was: I was trying to watch The Expanse on Ubuntu with a soundbar and couldn't hear dialog over the engine rumble of the Rocinante. I complained to Claude (Anthropic's AI) about the fact that there's no center channel volume knob anywhere in the Linux audio stack. Claude agreed this was genuinely insane, because LLMs are very agreeable. One conversation later, we had a working PipeWire filter-chain config. Two hours after that, we had a GTK4 app with real-time sliders that poke PipeWire's running audio graph without restarting anything.
 
-No Python was known. No PipeWire documentation was previously read. Just frustration, an AI that agreed the frustration was valid, and the discovery that PipeWire's filter-chain architecture is actually really well-engineered — it was just missing the UI on top.
+Apparently PipeWire's filter-chain architecture is actually really well-engineered — it was just missing the UI on top, or at least I couldn't find any.
 
-Built with [Claude](https://claude.ai) by Anthropic. The human provided the anger. Claude provided the code.
+Built with [Claude](https://claude.ai) by Anthropic. Human provided anger. Claude provided code.
 
 ## What It Does
 
@@ -81,14 +81,14 @@ Then search "Surround Mixer" in your app menu.
 
 VLC needs to send 5.1 audio to PipeWire instead of downmixing internally:
 
-1. Open VLC → Tools → Preferences
+1. Open VLC → Tools → Preferences → Audio 
 2. Click "All" at the bottom left (show advanced settings)
 3. Audio → set "Stereo audio output mode" to **Unset**
 4. Audio → Output modules → set to **PulseAudio audio output**
 5. Save and restart VLC
 6. While playing, open `pavucontrol` and route VLC to **Surround Mixer**
 
-VLC remembers the routing, so you only do this once.
+VLC remembers the routing, so you only do this once. Once it is working use Timeshift to back up your shit so you never have to do this again.
 
 ## Usage
 
@@ -109,7 +109,6 @@ Presets are individual JSON files in `~/.config/surround-mixer/presets/`:
 ```
 ~/.config/surround-mixer/presets/
   Dialog Boost.json
-  Movie Night.json
   Late Night.json
   ...
 ```
@@ -120,13 +119,13 @@ Each file is just the six gain values:
 {"fl": 0.8, "fc": 1.5, "fr": 0.8, "sl": 0.4, "lfe": 0.5, "sr": 0.4}
 ```
 
-Want to delete a preset? Delete the file. Want to share one? Send the file. Want to back them up? Copy the folder. The filesystem is the preset manager.
+Any new presets you make you can delete by deleting the file.
 
 ## How It Works
 
 Under the hood, Surround Mixer uses PipeWire's `libpipewire-module-filter-chain` to create a virtual audio sink with two `mixer` builtin nodes — one for the left output, one for the right. Each mixer takes four inputs (front, center, surround, and LFE for its side) with independent gain controls.
 
-When you drag a slider, the app calls `pw-cli set-param` on the running filter-chain node to update the gain in real-time — no PipeWire restart, no audio interruption. The PipeWire config file is also silently updated in the background so your settings survive reboots.
+When you drag a slider, the app calls `pw-cli set-param` on the running filter-chain node to update the gain in real-time. The PipeWire config file is also silently updated in the background so your settings survive reboots.
 
 ```
 5.1 Input              Mixers                                     Output
@@ -163,6 +162,7 @@ This started as one person yelling at a soundbar. PRs welcome. Especially intere
 - System tray integration with a quick center-channel slider
 - Per-application routing (auto-route media players to the mixer)
 - A way to detect whether the source is actually sending 5.1 vs stereo
+- A human who actually knows python because this code was spit out by Claude so I would stop complaining about it
 
 ## License
 
