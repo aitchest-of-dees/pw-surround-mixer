@@ -7,7 +7,7 @@ A real-time PipeWire 5.1→stereo downmix controller for Linux. Gives you per-ch
 ![Python](https://img.shields.io/badge/python-3.10+-blue) ![PipeWire](https://img.shields.io/badge/PipeWire-0.3+-green) ![License](https://img.shields.io/badge/license-MIT-yellow)
 
 <!-- screenshot goes here -->
-<!-- ![screenshot](screenshot.png) -->
+![screenshot](screenshot.png) 
 
 ## The Problem
 
