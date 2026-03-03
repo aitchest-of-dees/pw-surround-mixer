@@ -150,9 +150,9 @@ LFE ───────────────→ ┘
 
 **Dialog still quiet** — Make sure VLC is outputting 5.1, not downmixing to stereo internally. Check VLC's "Stereo audio output mode" is set to "Unset". Also make sure VLC is routed to "Surround Mixer" in pavucontrol, not directly to your soundbar.
 
-**Distortion on loud scenes** — Gains above 1.0 can clip. Lower the center gain or reduce all other channels proportionally.
+**Distortion on loud scenes** — In theory, gains above 1.0 can clip. Lower the center gain or reduce all other channels proportionally. 
 
-**Works with other players?** — Anything that outputs 5.1 via PipeWire/PulseAudio should work. Route it to the Surround Mixer sink in pavucontrol.
+**Works with other players?** — Anything that outputs 5.1 via PipeWire/PulseAudio *should* work. Route it to the Surround Mixer sink in pavucontrol. I've only tested it with VLC.
 
 ## Contributing
 
