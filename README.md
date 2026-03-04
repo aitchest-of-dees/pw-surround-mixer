@@ -6,7 +6,6 @@ A real-time PipeWire 5.1→stereo downmix controller for Linux. Gives you per-ch
 
 ![Python](https://img.shields.io/badge/python-3.10+-blue) ![PipeWire](https://img.shields.io/badge/PipeWire-0.3+-green) ![License](https://img.shields.io/badge/license-MIT-yellow)
 
-<!-- screenshot goes here -->
 ![screenshot](screenshot.png) 
 
 ## The Problem
@@ -23,7 +22,7 @@ This app exists because I don't know Python.
 
 What happened was: I was trying to watch The Expanse on Ubuntu with a soundbar and couldn't hear dialog over the engine rumble of the Rocinante. I complained to Claude (Anthropic's AI) about the fact that there's no center channel volume knob anywhere in the Linux audio stack. Claude agreed this was genuinely insane, because LLMs are very agreeable. One conversation later, we had a working PipeWire filter-chain config. Two hours after that, we had a GTK4 app with real-time sliders that poke PipeWire's running audio graph without restarting anything.
 
-Apparently PipeWire's filter-chain architecture is actually really well-engineered — it was just missing the UI on top, or at least I couldn't find any.
+Apparently PipeWire's filter-chain architecture is actually really well-engineered — it was just missing the UI on top, or at least I couldn't find any. 
 
 Built with [Claude](https://claude.ai) by Anthropic. Human provided anger. Claude provided code.
 
@@ -36,7 +35,7 @@ Surround Mixer creates a virtual PipeWire audio sink that:
 3. Mixes it down to stereo for your output device
 4. Does this in real-time — drag a slider while audio is playing and hear the change instantly
 
-The center channel (where dialog lives) gets mixed into both left and right outputs. Crank its gain above the others and suddenly you can hear people talk.
+The center channel (where dialog lives) gets mixed into both left and right outputs. Crank its gain above the others and suddenly you can hear people talk. Balance your speakers if they're all wonky. Crank the subwoofer, or, don't. Feel the rush of power when you control your own sonic experience. 
 
 ## Install
 
@@ -152,17 +151,11 @@ LFE ───────────────→ ┘
 
 **Distortion on loud scenes** — In theory, gains above 1.0 can clip. Lower the center gain or reduce all other channels proportionally. 
 
-**Works with other players?** — Anything that outputs 5.1 via PipeWire/PulseAudio *should* work. Route it to the Surround Mixer sink in pavucontrol. I've only tested it with VLC.
+**Works with other players?** — Anything that outputs 5.1 via PipeWire/PulseAudio *should* work? Route it to the Surround Mixer sink in pavucontrol. I've only tested it with VLC.
 
 ## Contributing
 
-This started as one person yelling at a soundbar. PRs welcome. Especially interested in:
-
-- Flatpak / Snap packaging
-- System tray integration with a quick center-channel slider
-- Per-application routing (auto-route media players to the mixer)
-- A way to detect whether the source is actually sending 5.1 vs stereo
-- A human who actually knows python because this code was spit out by Claude so I would stop complaining about it
+This started as one person yelling at a soundbar. PRs welcome. Go ham.
 
 ## License
 
